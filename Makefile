@@ -28,7 +28,7 @@ $(TARGET): $(OBJECTS) | $(BUILD_DIR)
 # Compile object files.
 $(BUILD_DIR)/$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c $(HEADERS) | $(BUILD_DIR)/$(OBJ_DIR)
 	@ printf "%8s %-40s %s\n" $(CC) $< "$(CFLAGS)"
-	@ $(CC) -c $(C_LANG) $(CFLAGS) -o $@ $<
+	$(CC) -c $(C_LANG) $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
