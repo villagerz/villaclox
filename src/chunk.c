@@ -7,10 +7,12 @@ void initChunk(Chunk* chunk) {
   chunk->count = 0;
   chunk->capacity = 0;
   chunk->code = NULL;
+  initValueArray(&chunk->constants);
 }
 
 void freeChunk(Chunk* chunk) {
   FREE_ARRAY(uint8_t, chunk->code, chunk->capacity);
+  freeValueArray(&chunk->constants);
   initChunk(chunk);
 }
 
@@ -22,4 +24,9 @@ void writeChunk(Chunk* chunk, uint8_t bytecode) {
   }
   chunk->code[chunk->count] = bytecode;
   chunk->count++;
+}
+
+int addConstant(Chunk* chunkp, Value value) {
+  writeValueArray(&chunkp->constants, value);
+  return chunkp->constants.count - 1; // to return the index of where the constant is stored
 }
