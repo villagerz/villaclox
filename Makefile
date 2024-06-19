@@ -19,15 +19,13 @@ clean:
 
 # Link the interpreter.
 $(TARGET): $(OBJECTS) | $(BUILD_DIR)
-	@ printf "%8s %-40s %s\n" $(CC) $@ "$(CFLAGS)"
-	@ $(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 	@ cp build/clox clox # For convenience, copy the interpreter to the top level.
 
 
 
 # Compile object files.
 $(BUILD_DIR)/$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c $(HEADERS) | $(BUILD_DIR)/$(OBJ_DIR)
-	@ printf "%8s %-40s %s\n" $(CC) $< "$(CFLAGS)"
 	$(CC) -c $(C_LANG) $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR):
