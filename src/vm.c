@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "common.h"
+#include "compiler.h"
 #include "debug.h"
 #include "vm.h"
 
@@ -77,6 +78,7 @@ static InterpretResult run() {
 }
 
 InterpretResult interpret(const char* source) {
+  compile(source);
   return INTERPRET_OK;
 }
   
