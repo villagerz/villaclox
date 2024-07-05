@@ -169,9 +169,12 @@ static TokenType tryToken(const char c, TokenType use, TokenType elseThis) {
 Token scanToken() {
   skipWhitespace();
   scanner.start = scanner.current;
-  if (isAtEnd() ) makeToken(TOKEN_EOF);
+  if (isAtEnd() ) return  makeToken(TOKEN_EOF);
 
   char c = advance();
+  if ( c == '\0' ) printf("Found null char.\n");
+  
+  printf("Scanned [%c] \n", c);
   if (isAlpha(c)) return identifier();
   if (isDigit(c)) return number();
   switch(c) {
