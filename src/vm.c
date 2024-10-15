@@ -109,6 +109,7 @@ static InterpretResult run() {
     case OP_NIL: push(NIL_VAL); break;
     case OP_TRUE: push(BOOL_VAL(true)); break;
     case OP_FALSE: push(BOOL_VAL(false)); break;
+    case OP_POP: pop(); break;
     case OP_EQUAL: {
       Value b = pop();
       Value a = pop();
@@ -118,9 +119,9 @@ static InterpretResult run() {
     case OP_GREATER: BINARY_OP(BOOL_VAL, >); break;
     case OP_LESS: BINARY_OP(BOOL_VAL, <); break;
     case OP_ADD: {
-      if (IS_STRING(peek(1)) && IS_STRING(peek(2))) {
+      if (IS_STRING(peek(0)) && IS_STRING(peek(1))) {
 	concatinate();
-      } else if (IS_NUMBER(peek(0)) && IS_NUMBER(peek(2))) {
+      } else if (IS_NUMBER(peek(0)) && IS_NUMBER(peek(1))) {
 	double db = AS_NUMBER(pop());
 	double da = AS_NUMBER(pop());
 	push(NUMBER_VAL(da + db));
@@ -128,6 +129,7 @@ static InterpretResult run() {
 	runtimeError("Operands must be two numbers or two strings.");
 	return INTERPRET_RUNTIME_ERROR;
       }
+      break;
     }
     case OP_SUBTRACT: BINARY_OP(NUMBER_VAL, -); break;
     case OP_MULTIPLY: BINARY_OP(NUMBER_VAL, *); break;
@@ -140,9 +142,12 @@ static InterpretResult run() {
 	return INTERPRET_RUNTIME_ERROR;
       }
       push(NUMBER_VAL(-AS_NUMBER(pop()))); break;
-    case OP_RETURN: {
+    case OP_PRINT: {
       printValue(pop());
       printf("\n");
+      break;
+    }
+    case OP_RETURN: {
       return INTERPRET_OK;
     }
     }
