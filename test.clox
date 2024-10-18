@@ -1,4 +1,3 @@
-print "a" + "2";
-print 1 + 2;
-1 + 2;
-3 + 4;
+var bev = "cafe ";
+var break = "doughnets and " + bev;
+print break;
